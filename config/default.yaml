@@ -1,0 +1,51 @@
+# KG-RAG Pipeline Configuration
+
+# LLM settings
+llm:
+  provider: "openai"            # "openai" or "llama"
+  model: "gpt-4o"               # model name
+  temperature: 0.0
+  max_tokens: 4096
+
+# Embedding settings
+embedding:
+  model: "all-MiniLM-L6-v2"    # sentence-transformers model
+  dimension: 384
+
+# Document processing
+documents:
+  input_dir: "data/sample_docs"
+  chunk_size: 512               # characters per chunk
+  chunk_overlap: 64
+
+# Knowledge Graph
+knowledge_graph:
+  # Triple extraction
+  max_triples_per_chunk: 20
+  # Graph expansion
+  expansion_hops: 2             # number of hops for KG expansion
+
+# Retrieval
+retrieval:
+  top_k_bm25: 10
+  top_k_vector: 10
+  top_k_final: 10              # after RRF fusion
+  rrf_k: 60                    # RRF constant
+  top_k_kg_extra: 5            # extra chunks from KG expansion
+
+# Extraction schema (8-field)
+extraction:
+  fields:
+    - facility_name
+    - event_date
+    - event_location
+    - event_description
+    - cause
+    - detection_method
+    - plant_status
+    - response
+
+# Verification
+verification:
+  ngram_size: 3
+  support_threshold: 0.3       # minimum n-gram overlap to be "Supported"
